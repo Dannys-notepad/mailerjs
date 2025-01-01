@@ -21,6 +21,38 @@ SMPT_PASS = your created app password
 
 Once you're done, copy the code either the promises or asynchronous version, and paste in a mailer.js file in your project and you're good to go.
 
+Note: the modules behind `MailerJs` are `nodemailer` and `mailgen`, so when you copy the code make sure to install the modules.
+```sh 
+npm i nodemailer mailgen
+```
+
+And also don't forget to edit template mail to fit your mail
+
+## How to use in your project 
+This is an example code on how to use `MailerJs` in your project
+
+
+```js
+  const mailer = require('mailerjs')
+  try{
+    const sendMail = await mailer('example@gmail.com')
+  }catch(error){
+    if (error.code === 'EAUTH') {
+      console.error('Authentication error:', error);
+      return 'Authentication failed. Please check your email credentials.';
+    } else if (error.code === 'ENOTFOUND') {
+      console.error('DNS lookup error:', error);
+      return 'Error resolving SMTP server address. Please try again later.';
+    } else if (error.code === 'ECONNRESET') {
+      console.error('Connection reset error:', error);
+      return 'Error establishing a secure connection to the SMTP server. Please try again later.';
+    } else {
+      console.error('Unknown error:', error);
+      return 'An unknown error occurred. Please try again later.';
+    }
+  }
+```
+
 All thanks to Habib for giving me this idea, indirectly 😊.
 
 Leave a star 🌟 if you find this project interesting.
