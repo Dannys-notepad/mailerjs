@@ -38,15 +38,15 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
     throw new Error('A parameter was left blank');
   }
   
-  if(typeof smptConfig === 'object' || typeof mailgenConfig === 'object' || typeof mailTemplate === 'object'){
+  if(typeof smptConfig !== 'object' || typeof mailgenConfig !== 'object' || typeof mailTemplate !== 'object'){
     throw new Error('All parameter values must be an object');
   }
   
   // Creates an instance of Mailgen
-  const mailGenerator = new Mailgen({
+  const mailGenerator = new mailgen({
     theme: mailgenConfig.theme ?? 'default',
     product: {
-      name: mailgenConfig,projectName
+      name: mailgenConfig.projectName,
       link: mailgenConfig.indexLink
     }
   });
@@ -56,7 +56,7 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
     service: "gmail",
     auth: {
       user: smptConfig.user,
-      pass: smptConfig.pass,
+      pass: smptConfig.appPassword,
       authMethod: "PLAIN"
     },
     pool: true,
@@ -69,7 +69,7 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
         name: mailTemplate.heading,
         intro: mailTemplate.introText,
         action: {
-          instructions: mailTemplate.action.instructions,
+          instructions: mailTemplate.action.instruction,
           button: {
             color: mailTemplate.action.button.color ??  '#22BC66',
             text: mailTemplate.action.button.text,
@@ -89,10 +89,22 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
       subject: smptConfig.subject,
       html: emailBody
     });
-    return info.response
+    return true 
     } catch (error) {
-      return error
+      if (error.code === 'EAUTH') {
+      console.error('Authentication error:', error);
+      throw new Error('Authentication failed. Please check your email credentials.');
+    } else if (error.code === 'ENOTFOUND') {
+      console.error('DNS lookup error:', error);
+      throw new Error('Error resolving SMTP server address. Please try again later.');
+    } else if (error.code === 'ECONNRESET') {
+      console.error('Connection reset error:', error);
+      throw new Error('Error establishing a secure connection to the SMTP server. Please try again later.');
+    } else {
+      console.error('Unknown error:', error);
+      throw new Error('An unknown error occurred. Please try again later.');
     }
+  }
 }
 
 module.exports = mailerjs

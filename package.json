@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Dannys-notepad/mailerjs#readme",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "mailgen": "^2.0.28",
     "nodemailer": "^6.9.16"
   }

@@ -1,46 +1,40 @@
-const mailerjs = require('mailer')
+require('dotenv').config()
+const mailer = require('./mailer')
 
 const sendMail = async () => {
-  try{
-    const sendMail = await mailer({
-    smptConfig{
-    user: ''
-    appPassword: '',
-    subject: '',
-    recipientsEmail: ''
-  },
-    mailgenConfig{
-    theme: 'default',
-    projectName: '',
-    indexLink: '',
-  },
-    mailTemplate: {
-    heading: '',
-    introText: '',
+  let smptConfig = {
+    user: process.env.SMTP_USER,
+    appPassword: process.env.SMTP_PASS,
+    subject: 'Testing Mailer',
+    recipientsEmail: 'etimdnl@gmail.com'
+  }
+  let mailgenConfig = {
+    //theme: 'default',
+    projectName: 'mailerjs',
+    indexLink: 'no link yet'
+  }
+  let mailTemplate = {
+    heading: 'Testing mailerjs',
+    introText: 'What do you think',
     action: {
-      instruction: '',
+      instruction: 'try it out',
       button:{
-        color: '',
-        text: '',
-        link: ''
+        //color: '',
+        text: 'now',
+        link: 'yea'
       }
     },
-    outroText: ''
-  },
-})
-  
-  }catch(error){
-    if (error.code === 'EAUTH') {
-      console.error('Authentication error:', error);
-      return 'Authentication failed. Please check your email credentials.';
-    } else if (error.code === 'ENOTFOUND') {
-      console.error('DNS lookup error:', error);
-      return 'Error resolving SMTP server address. Please try again later.';
-    } else if (error.code === 'ECONNRESET') {
-      console.error('Connection reset error:', error);
-      return 'Error establishing a secure connection to the SMTP server. Please try again later.';
-    } else {
-      console.error('Unknown error:', error);
-      return 'An unknown error occurred. Please try again later.';
+    outroText: 'bye'
+  }
+  try{
+    const sendMail = await mailer(smptConfig, mailgenConfig, mailTemplate)
+    if(sendMail){
+      console.log('Mail sent')
+      process.exit(0)
     }
+  }catch(error){
+    return error 
+  }
 }
+
+sendMail()
