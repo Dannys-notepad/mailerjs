@@ -1,0 +1,24 @@
+{
+  "name": "mailerjs",
+  "version": "1.0.0",
+  "description": "A lightweight module for sending mails",
+  "main": "mailer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dannys-notepad/mailerjs.git"
+  },
+  "keywords": [],
+  "author": "Etim Charles Daniel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dannys-notepad/mailerjs/issues"
+  },
+  "homepage": "https://github.com/Dannys-notepad/mailerjs#readme",
+  "dependencies": {
+    "mailgen": "^2.0.28",
+    "nodemailer": "^6.9.16"
+  }
+}
