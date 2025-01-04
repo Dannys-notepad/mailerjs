@@ -6,7 +6,7 @@ const sendMail = async () => {
     user: process.env.SMTP_USER,
     appPassword: process.env.SMTP_PASS,
     subject: 'Testing Mailer',
-    recipientsEmail: 'etimdnl@gmail.com'
+    recipientsEmail: 'etimdnl41@gmail.com'
   }
   let mailgenConfig = {
     //theme: 'default',

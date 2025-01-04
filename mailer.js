@@ -34,7 +34,7 @@ const mailgen = require('mailgen')
  
 const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
   
-  if(typeof smptConfig === 'undefined' || typeof mailgenConfig === 'undefined' || typeof mailTemplate === 'undefined'){
+  if(!smptConfig || !mailgenConfig|| !mailTemplate){
     throw new Error('A parameter was left blank');
   }
   
@@ -100,6 +100,12 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
     } else if (error.code === 'ECONNRESET') {
       console.error('Connection reset error:', error);
       throw new Error('Error establishing a secure connection to the SMTP server. Please try again later.');
+    } else if (error.code === 'EENVELOP') {
+      console.error('Authentication error:', error);
+      throw new Error('Authentication failed. Please check your email credentials, and please make sure they\' well linked the imoport is included if you\'re referencing them from a .env file');
+    } else if (error.code === 'EDNS') {
+      console.error('DNS lookup error:', error);
+      throw new Error('Error resolving SMTP server address. please check your internet connection');
     } else {
       console.error('Unknown error:', error);
       throw new Error('An unknown error occurred. Please try again later.');
