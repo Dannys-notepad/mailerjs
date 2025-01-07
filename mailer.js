@@ -4,7 +4,7 @@ const mailgen = require('mailgen')
 /*
 
 {
-  smptConfig{
+  smtpConfig{
     user: ''
     appPassword: '',
     subject: '',
@@ -32,22 +32,26 @@ const mailgen = require('mailgen')
 
  */
  
-const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
+const mailerjs = async (smtpConfig, mailgenConfig, mailTemplate) => {
   
-  if(!smptConfig || !mailgenConfig|| !mailTemplate){
+  if(!smtpConfig || !mailgenConfig|| !mailTemplate){
     throw new Error('A parameter was left blank');
   }
   
-  if(typeof smptConfig !== 'object' || typeof mailgenConfig !== 'object' || typeof mailTemplate !== 'object'){
+  if(typeof smtpConfig !== 'object' || typeof mailgenConfig !== 'object' || typeof mailTemplate !== 'object'){
     throw new Error('All parameter values must be an object');
+  }
+  
+  if(!smtpConfig.user || !smtpConfig.appPassword || !smtpConfig.object || !smtpConfig.recipientsEmail){
+    throw new Error('an smtpConfig object was omitted, check and try again')
   }
   
   // Creates an instance of Mailgen
   const mailGenerator = new mailgen({
     theme: mailgenConfig.theme ?? 'default',
     product: {
-      name: mailgenConfig.projectName,
-      link: mailgenConfig.indexLink
+      name: mailgenConfig.projectName ?? 'null',
+      link: mailgenConfig.indexLink ?? 'null'
     }
   });
   
@@ -55,8 +59,8 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: smptConfig.user,
-      pass: smptConfig.appPassword,
+      user: smtpConfig.user,
+      pass: smtpConfig.appPassword,
       authMethod: "PLAIN"
     },
     pool: true,
@@ -66,17 +70,17 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
   // Generates email body
     const email = {
       body: {
-        name: mailTemplate.heading,
-        intro: mailTemplate.introText,
+        name: mailTemplate.heading ?? 'null',
+        intro: mailTemplate.introText ?? 'null',
         action: {
-          instructions: mailTemplate.action.instruction,
+          instructions: mailTemplate.action.instruction ?? 'null',
           button: {
             color: mailTemplate.action.button.color ??  '#22BC66',
-            text: mailTemplate.action.button.text,
-            link: mailTemplate.action.button.link
+            text: mailTemplate.action.button.text ?? 'null',
+            link: mailTemplate.action.button.link ?? 'null'
           }
         },
-        outro: mailTemplate.outroText
+        outro: mailTemplate.outroText ?? 'null'
       }
     };
     const emailBody = mailGenerator.generate(email);
@@ -84,9 +88,9 @@ const mailerjs = async (smptConfig, mailgenConfig, mailTemplate) => {
     // Sends email
     try {
       const info = await transporter.sendMail({
-      from: smptConfig.user,
-      to: smptConfig.recipientsEmail,
-      subject: smptConfig.subject,
+      from: smtpConfig.user,
+      to: smtpConfig.recipientsEmail,
+      subject: smtpConfig.subject,
       html: emailBody
     });
     return true 
