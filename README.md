@@ -16,9 +16,6 @@ To do that copy or click this link https://myaccount.google.com/apppasswords?rap
 ```sh
 npm i mailerjs
 ```
-```sh
-npm i dotenv
-```
 
 After running the above command create a .env file with the following structures. 
 
@@ -32,6 +29,7 @@ This is an example code on how to use `MailerJs` in your project
 
 
 ```js
+  require('dotenv').config()
   const mailer = require('mailerjs')
   
   let smptConfig = {
@@ -52,5 +50,9 @@ This is an example code on how to use `MailerJs` in your project
     return error 
   }
 ```
+
+git repo: https://github.com/Dannys-notepad/mailer.js
+
+Do well to send your pull requests i promise to accept them
 
 Leave a star 🌟 if you find this project interesting.

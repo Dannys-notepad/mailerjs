@@ -10,7 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/Dannys-notepad/mailerjs.git"
   },
-  "keywords": [mail, mailer, email, nodemailer, easy, lightweight, fast],
+  "keywords": [
+    "mail",
+    "mailer",
+    "email",
+    "nodemailer",
+    "easy",
+    "lightweight",
+    "fast"
+  ],
   "author": "Etim Charles Daniel",
   "license": "MIT",
   "bugs": {
