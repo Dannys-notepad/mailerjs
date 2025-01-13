@@ -1,5 +1,5 @@
 require('dotenv').config()
-const mailer = require('./mailer')
+const mailer = require('./pixmail')
 
 const sendMail = async () => {
   let smptConfig = {

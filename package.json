@@ -1,30 +1,33 @@
 {
-  "name": "mailerjs",
+  "name": "pixmail",
   "version": "1.0.0",
   "description": "A lightweight package for sending mails",
-  "main": "mailer.js",
+  "main": "pixmail.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dannys-notepad/mailerjs.git"
+    "url": "git+https://github.com/Dannys-notepad/pixmail.git"
   },
   "keywords": [
     "mail",
     "mailer",
+    "pixmail",
+    "mailer.io",
     "email",
+    "smtp",
     "nodemailer",
     "easy",
     "lightweight",
     "fast"
   ],
-  "author": "Etim Charles Daniel",
+  "author": "dannysnotepad",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Dannys-notepad/mailerjs/issues"
+    "url": "https://github.com/Dannys-notepad/pixmail/issues"
   },
-  "homepage": "https://github.com/Dannys-notepad/mailerjs#readme",
+  "homepage": "https://github.com/Dannys-notepad/pixmail#readme",
   "dependencies": {
     "dotenv": "^16.4.7",
     "nodemailer": "^6.9.16"

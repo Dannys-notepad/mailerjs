@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const { validateEmailAddress } = require('./utils')
 
-const mailerjs = async (smtpConfig) => {
+const pixmail = async (smtpConfig) => {
   
   if(!smtpConfig){
     throw new Error('parameter cannot be left blank')
@@ -65,4 +65,4 @@ const mailerjs = async (smtpConfig) => {
 }
 
 
-module.exports = mailerjs
+module.exports = pixmail
