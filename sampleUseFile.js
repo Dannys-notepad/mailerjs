@@ -4,30 +4,14 @@ const mailer = require('./mailer')
 const sendMail = async () => {
   let smptConfig = {
     user: process.env.SMTP_USER,
-    appPassword: process.env.SMTP_PASS,
+    pass: process.env.SMTP_PASS,
     subject: 'Testing Mailer',
-    recipientsEmail: 'etimdnl41@gmail.com'
+    recipientEmail: 'etimdnl',
+    body: 'A mail sent with MailerJs npm library'
   }
-  let mailgenConfig = {
-    //theme: 'default',
-    projectName: 'mailerjs',
-    indexLink: 'no link yet'
-  }
-  let mailTemplate = {
-    heading: 'Testing mailerjs',
-    introText: 'What do you think',
-    action: {
-      instruction: 'try it out',
-      button:{
-        //color: '',
-        text: 'now',
-        link: 'yea'
-      }
-    },
-    outroText: 'bye'
-  }
+  
   try{
-    const sendMail = await mailer(smptConfig, mailgenConfig, mailTemplate)
+    const sendMail = await mailer(smptConfig)
     if(sendMail){
       console.log('Mail sent')
       process.exit(0)

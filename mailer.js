@@ -1,101 +1,48 @@
 const nodemailer = require('nodemailer')
-const mailgen = require('mailgen')
+const { validateEmailAddress } = require('./utils')
 
-/*
-
-{
-  smtpConfig{
-    user: ''
-    appPassword: '',
-    subject: '',
-    recipientsEmail: ''
-  },
-  mailgenConfig{
-    theme: 'default',
-    projectName: '',
-    indexLink: '',
-  },
-  mailTemplate: {
-    heading: '',
-    introText: '',
-    action: {
-      instruction: '',
-      button:{
-        color: '',
-        text: '',
-        link: ''
-      }
-    },
-    outroText: ''
-  },
-}
-
- */
- 
-const mailerjs = async (smtpConfig, mailgenConfig, mailTemplate) => {
+const mailerjs = async (smtpConfig) => {
   
-  if(!smtpConfig || !mailgenConfig|| !mailTemplate){
-    throw new Error('A parameter was left blank');
+  if(!smtpConfig){
+    throw new Error('parameter cannot be left blank')
   }
   
-  if(typeof smtpConfig !== 'object' || typeof mailgenConfig !== 'object' || typeof mailTemplate !== 'object'){
-    throw new Error('All parameter values must be an object');
+  if(typeof smtpConfig !== 'object'){
+    throw new Error('parameter value must be an object')
   }
   
-  if(!smtpConfig.user || !smtpConfig.appPassword || !smtpConfig.object || !smtpConfig.recipientsEmail){
+  if(!smtpConfig.user || !smtpConfig.pass || !smtpConfig.subject || !smtpConfig.recipientEmail || !smtpConfig.body){
     throw new Error('an smtpConfig object was omitted, check and try again')
   }
   
-  // Creates an instance of Mailgen
-  const mailGenerator = new mailgen({
-    theme: mailgenConfig.theme ?? 'default',
-    product: {
-      name: mailgenConfig.projectName ?? 'null',
-      link: mailgenConfig.indexLink ?? 'null'
-    }
-  });
+  const valid = await validateEmailAddress(smtpConfig.recipientEmail)
   
-  // Creates a transport instance
+  if(!valid){
+    throw new Error('The entered email address is not valid')
+  }
+  
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
       user: smtpConfig.user,
-      pass: smtpConfig.appPassword,
-      authMethod: "PLAIN"
+      pass: smtpConfig.pass,
+      authMethod: 'PLAIN'
     },
     pool: true,
     maxConnections: 5
-  });
+  })
   
-  // Generates email body
-    const email = {
-      body: {
-        name: mailTemplate.heading ?? 'null',
-        intro: mailTemplate.introText ?? 'null',
-        action: {
-          instructions: mailTemplate.action.instruction ?? 'null',
-          button: {
-            color: mailTemplate.action.button.color ??  '#22BC66',
-            text: mailTemplate.action.button.text ?? 'null',
-            link: mailTemplate.action.button.link ?? 'null'
-          }
-        },
-        outro: mailTemplate.outroText ?? 'null'
-      }
-    };
-    const emailBody = mailGenerator.generate(email);
-    
-    // Sends email
-    try {
-      const info = await transporter.sendMail({
-      from: smtpConfig.user,
-      to: smtpConfig.recipientsEmail,
-      subject: smtpConfig.subject,
-      html: emailBody
-    });
+  try {
+    const info = await transporter.sendMail({
+    from: smtpConfig.user,
+    to: smtpConfig.recipientEmail,
+    subject: smtpConfig.subject,
+    text: smtpConfig.body
+    })
     return true 
-    } catch (error) {
-      if (error.code === 'EAUTH') {
+    
+  } catch (error) {
+    if (error.code === 'EAUTH') {
       console.error('Authentication error:', error);
       throw new Error('Authentication failed. Please check your email credentials.');
     } else if (error.code === 'ENOTFOUND') {
@@ -116,5 +63,6 @@ const mailerjs = async (smtpConfig, mailgenConfig, mailTemplate) => {
     }
   }
 }
+
 
 module.exports = mailerjs
