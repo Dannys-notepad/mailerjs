@@ -1,7 +1,7 @@
 {
   "name": "mailerjs",
   "version": "1.0.0",
-  "description": "A lightweight module for sending mails",
+  "description": "A lightweight package for sending mails",
   "main": "mailer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Dannys-notepad/mailerjs.git"
   },
-  "keywords": [],
+  "keywords": [mail, mailer, email, nodemailer, easy, lightweight, fast],
   "author": "Etim Charles Daniel",
   "license": "MIT",
   "bugs": {

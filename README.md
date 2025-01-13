@@ -10,14 +10,24 @@ To use `MailerJs` with your gmail account you'll need to create an app password 
 
 To do that copy or click this link https://myaccount.google.com/apppasswords?rapt=AEjHL4O09_dsFEiMJQkZ53AtjhHYCFdPIQnCuq5Pdy0GURsLoIDtvswcm3q2N0jvnitc802fiViGNOah8hPwytVMRDgG7t3s5aReZCFBHOsJmbDzow2iW3E, and follow the procedures.
 
+
 ## Usage
-To use `MailerJs` first of all create a .env file with the following structures. 
+
+```sh
+npm i mailerjs
+```
+```sh
+npm i dotenv
+```
+
+After running the above command create a .env file with the following structures. 
 
 
 SMPT_USER = your email 
+
 SMPT_PASS = your created app password
 
-## How to use in your project 
+## Code Sample 
 This is an example code on how to use `MailerJs` in your project
 
 
