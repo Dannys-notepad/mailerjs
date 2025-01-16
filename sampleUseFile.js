@@ -5,9 +5,10 @@ const sendMail = async () => {
   let smptConfig = {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
-    subject: 'Testing Mailer',
-    recipientEmail: 'etimdnl',
-    body: 'A mail sent with MailerJs npm library'
+    subject: 'Testing Pixmail',
+    recipientEmail: 'sample@gmail.com',
+    body: 'A test mail from pixmail'
+    //bodyType: 'html'
   }
   
   try{

@@ -21,6 +21,10 @@ const pixmail = async (smtpConfig) => {
     throw new Error('The entered email address is not valid')
   }
   
+  if(smtpConfig.bodyType !== undefined && smtpConfig.bodyType !== 'html'){
+    throw new Error('The bodyType object accepts only html as a value')
+  }
+  
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -37,7 +41,7 @@ const pixmail = async (smtpConfig) => {
     from: smtpConfig.user,
     to: smtpConfig.recipientEmail,
     subject: smtpConfig.subject,
-    text: smtpConfig.body
+    [smtpConfig.bodyType ?? 'text']: smtpConfig.body
     })
     return true 
     
