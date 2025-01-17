@@ -1,6 +1,6 @@
 {
   "name": "pixmail",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple and efficient email sending module for Node.js applications.",
   "main": "pixmail.js",
   "scripts": {

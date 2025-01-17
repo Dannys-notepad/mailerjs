@@ -1,4 +1,4 @@
-# `Pixmail`
+# `Pixmail v2.0.1`
 > A simple and efficient email sending module for Node.js applications.
 
 `Pixmail` is a lightweight wrapper around the Nodemailer module, for sending mails with nodejs, it makes sending mails fast and easy without you having to always type out the required codes or going through the hassle of catching errors manually, also comes with premade mail templates.
@@ -8,7 +8,7 @@
 1. #installation
 2. #requirements
 3. #usage
-4. examples
+4. #examples
 5. #api-documentation
 6. #error-handling
 7. #license
@@ -66,7 +66,7 @@ pixmail.sendMail({
 });
 ```
 
-*Sending an HTML Email without a Button*
+*Sending an HTML Email template without a Button*
 ```javascript
 const pixmail = require('pixmail');
 
@@ -76,8 +76,8 @@ pixmail.setup({
   pass: 'your-email-app-password',
 });
 
-// Generate email HTML
-const emailHtml = pixmail.generateEmailHtml('withoutButton', {
+// Generate email template 
+const emailHtml = pixmail.generateTemplate('withoutButton', {
   recipientName: 'John Doe',
   topic: 'Meeting Invitation',
   importantInformation: 'Please RSVP by Friday',
@@ -89,12 +89,12 @@ pixmail.sendMail({
   from: 'your-email@gmail.com',
   to: 'recipient-email@example.com',
   subject: 'Meeting Invitation',
-  bodyType: 'html
+  bodyType: 'html'
   body: emailHtml,
 });
 ```
 
-*Sending an HTML Email with a Button*
+*Sending an HTML Email template with a Button*
 ```javascript
 const pixmail = require('pixmail');
 
@@ -104,11 +104,11 @@ pixmail.setup({
   pass: 'your-email-app-password',
 });
 
-// Generate email HTML
-const emailHtml = pixmail.generateEmailHtml('withButton', {
+// Generate email template 
+const emailHtml = pixmail.generateTemplate('withButton', {
   recipientName: 'John Doe',
   topic: 'Meeting Invitation',
-  importantInformation: 'Please RSVP by Friday',
+  action: 'Please RSVP by Friday',
   linkUrl: 'https://example.com',
   yourName: 'Jane Smith',
 });
@@ -118,7 +118,7 @@ pixmail.sendMail({
   from: 'your-email@gmail.com',
   to: 'recipient-email@example.com',
   subject: 'Meeting Invitation',
-  bodyType: 'html
+  bodyType: 'html',
   body: emailHtml,
 });
 ```
