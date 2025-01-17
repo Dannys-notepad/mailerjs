@@ -30,7 +30,7 @@ const pixmail = {
     });
   },
 
-  generateEmailHtml: (templateName, data) => {
+  generateTemplate: (templateName, data) => {
     let templateString;
     if (templateName === 'withButton') {
       templateString = templates.withButton;
@@ -48,7 +48,7 @@ const pixmail = {
         throw new Error('Parameter value must be a non-null object');
       }
 
-      const requiredProperties = ['subject', 'to', 'html']; // changed body to html
+      const requiredProperties = ['subject', 'to', 'body']; // changed body to html
       for (const property of requiredProperties) {
         if (!mailOptions[property]) {
           throw new Error(`Missing required property: ${property}`);
@@ -63,12 +63,15 @@ const pixmail = {
       if (!valid) {
         throw new Error('The entered email address is not valid');
       }
+      if(mailOptions.bodyType && mailOptions.bodyType !== 'html'){
+        throw new Error('wrong body type value, the only accepted value is "html"')
+      }
 
       const info = await transporter.sendMail({
         from: mailOptions.from,
         to: mailOptions.to,
         subject: mailOptions.subject,
-        html: mailOptions.html, // changed body to html
+        [mailOptions.bodyType ?? 'text']: mailOptions.body, // changed body to html
       });
 
       return info;
