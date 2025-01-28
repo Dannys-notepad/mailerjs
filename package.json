@@ -1,6 +1,6 @@
 {
   "name": "pixmail",
-  "version": "2.0.1",
+  "version": "2.1.2",
   "description": "A simple and efficient email sending module for Node.js applications.",
   "main": "pixmail.js",
   "scripts": {
@@ -22,7 +22,9 @@
     "nodemailer",
     "easy",
     "lightweight",
-    "fast"
+    "fast",
+    "wrapper",
+    "template"
   ],
   "author": "dannysnotepad",
   "license": "MIT",
